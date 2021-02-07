@@ -4,7 +4,7 @@ import { useState } from 'react'
 import './App.css'
 
 const App = () => {
-  const [tasks] = useState([
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       text: 'Doctor Appointment',
@@ -24,10 +24,20 @@ const App = () => {
       remainder: false,
     },
   ])
+  const deleteTask = (id) => {
+    const remainTask = tasks.filter((task) => {
+      return task.id !== id
+    })
+    setTasks(remainTask)
+  }
   return (
     <div className="container">
       <Header />
-      <Tasks tasks={tasks} />
+      {tasks.length > 0 ? (
+        <Tasks tasks={tasks} deleteTask={deleteTask} />
+      ) : (
+        'No task to be deleted'
+      )}
     </div>
   )
 }
